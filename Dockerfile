@@ -1,14 +1,11 @@
-FROM nginx
-
-# Install Nginx
-RUN apt-get -y update && apt-get -y install nginx
-
-# Copy the Nginx config
-COPY ubuntu1-nikola.gotoadmins.cloud /etc/nginx/sites-available/ubuntu1-nikola.gotoadmins.cloud
-COPY index.html /var/www/ubuntu1-nikola.gotoadmins.cloud/html/
-
-# Expose the port for access
-EXPOSE 80
-
-# Run the Nginx server
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+USER root
+RUN apt-get update -qq \
+    && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common 
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+RUN apt-get update  -qq \
+    && apt-get install docker-ce=17.12.1~ce-0~debian -y
+RUN usermod -aG docker jenkins
