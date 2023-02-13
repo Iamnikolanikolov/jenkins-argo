@@ -1,11 +1,16 @@
-node {
-    checkout scm
+pipeline {
+    agent any
 
-    docker.withRegistry('https://hub.docker.com/u/iamnikolanikolov', 'docker-hub-credentials') {
-
-        def customImage = docker.build("Iamnikolanikolov/dockerweppage")
-
-        /* Push the container to the custom Registry */
-        customImage.push()
+    stages {
+        stage('Clone Git Repository') {
+            steps {
+                git url: 'https://github.com/Iamnikolanikolov/jenkins-argo.git', branch: 'main'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t myimage:latest .'
+            }
+        }
     }
 }
