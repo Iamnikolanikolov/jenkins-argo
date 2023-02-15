@@ -1,11 +1,7 @@
-FROM nginx
+FROM ubuntu
 
-RUN apt-get update && apt-get upgrade -y
- 
-COPY index.html /usr/share/nginx/html
- 
-COPY default.conf /etc/nginx/conf.d
-
+RUN apt-get update
+RUN apt-get install nginx -y
+COPY index.html /var/www/html/
 EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx","-g","daemon off;"]
