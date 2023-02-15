@@ -1,9 +1,0 @@
-apiVersion: v2
-name: nginx-app1
-description: app1
-type: application
-version: 0.1.0
-appVersion: "1.0.0"
-maintainers:
-- email: nikola@nikola.nikola
-  name: nikola
